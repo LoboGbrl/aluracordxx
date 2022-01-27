@@ -1,7 +1,11 @@
 //Componnent React
 import appConfig from "../config.json";
 import { Fragment } from "react/cjs/react.production.min";
-import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import { Box, Button, Text, TextField, Image , Input} from "@skynexui/components";
+import React from "react";
+import {useRouter} from 'next/router'
+import next from "next";
+
 
 function Titulo(props) {
     const Tag = props.tag || 'h1';
@@ -18,6 +22,7 @@ function Titulo(props) {
       </>
     );
   }
+
 
 const GlobalStyle = () => {
   return (
@@ -62,7 +67,9 @@ const GlobalStyle = () => {
 //   export default HomePage
 
 export default function PaginaInicial() {
-  const username = "peas";
+  // const username = "peas"
+  const [username,setUsername] = React.useState('')
+  const roteamento = useRouter()
 
   return (
     <>
@@ -72,7 +79,7 @@ export default function PaginaInicial() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.primary['200'],
+          backgroundColor: appConfig.theme.colors.primary['700'],
           backgroundImage:
             "url(https://i.pinimg.com/originals/fc/ba/c4/fcbac4d9b14cdd6a4bbc5f9491c02962.gif)",
           backgroundRepeat: "no-repeat",
@@ -101,6 +108,11 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit = {(event)=>{
+              event.preventDefault()
+              // window.location.href = './chat'
+              roteamento.push('./chat')
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -111,18 +123,31 @@ export default function PaginaInicial() {
               marginBottom: "32px",
             }}
           >
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
+            <Titulo tag="h2">Coé Cria , Welcome ai!!</Titulo>
             <Text
               variant="body3"
               styleSheet={{
                 marginBottom: "32px",
-                color: appConfig.theme.colors.neutrals[300],
+                color: appConfig.theme.colors.neutrals[100],
               }}
             >
               {appConfig.name}
             </Text>
-
-            <TextField
+              {/* {/* <label for="user"><Titulo tag="h3">Username: </Titulo></label>
+              <input type="text" id="user" value={username} 
+              onChange={function Handler (event) {
+                //where is the value (event.target.value)
+                //switch the value
+                setUsername(event.target.value)
+              }} }
+                /> */}
+            <TextField value ={username}
+              placeholder="Username"
+              onChange={function Handler (event) {
+                //where is the value (event.target.value)
+                //switch the value
+                setUsername(event.target.value)
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -169,6 +194,7 @@ export default function PaginaInicial() {
                 marginBottom: "16px",
               }}
               src={`https://github.com/${username}.png`}
+              pointerEvents='none'
             />
             <Text
               variant="body4"
